@@ -1,0 +1,33 @@
+<<<<<<< HEAD
+services:
+  - type: web
+    name: django-ajax-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn lobby.wsgi:application
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: lobby.settings
+      - key: PYTHON_VERSION
+        value: 3.10
+=======
+services:
+  - type: web
+    name: django-ajax-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn lobby.wsgi:application
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: lobby.settings
+      - key: PYTHON_VERSION
+        value: 3.10
+>>>>>>> 064c8003ac86536e85c31b9f5f539e66eedc6ff9

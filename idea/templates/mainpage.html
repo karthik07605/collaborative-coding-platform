@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Code Space - Real-Time Coding Universe</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      color: #ffffff;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+
+    .light {
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: #2a2a2a;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      transition: background 0.3s;
+    }
+
+    .light header {
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .light nav a {
+      color: #1a1a1a;
+    }
+
+    nav a:hover {
+      color: #007bff;
+      transform: translateY(-2px);
+    }
+
+    .theme-toggle {
+      background: #3a3a3a;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .light .theme-toggle {
+      background: #f0f0f0;
+    }
+
+    .theme-toggle:hover {
+      background: #4a4a4a;
+      transform: scale(1.1);
+    }
+
+    .light .theme-toggle:hover {
+      background: #e0e0e0;
+    }
+
+    .theme-toggle input {
+      display: none;
+    }
+
+    .theme-toggle label {
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .theme-toggle .icon {
+      display: none;
+    }
+
+    .theme-toggle input:checked ~ label .sun {
+      display: inline;
+    }
+
+    .theme-toggle input:checked ~ label .moon {
+      display: none;
+    }
+
+    .theme-toggle input:not(:checked) ~ label .sun {
+      display: none;
+    }
+
+    .theme-toggle input:not(:checked) ~ label .moon {
+      display: inline;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      background: radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 100%);
+      transition: background 0.3s;
+      opacity: 0;
+      transform: translateY(100px);
+      animation: slideUp 0.8s ease-out forwards;
+    }
+
+    .light .hero {
+      background: radial-gradient(circle at center, #e6f0ff 0%, #d6e4ff 100%);
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-content {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      max-width: 1200px;
+    }
+
+    .hero-left {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 4rem;
+    }
+
+    .hero-right {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      overflow: visible;
+    }
+
+    .app-name {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #007bff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #007bff;
+      width: 0;
+      animation: typing 2s steps(10) forwards, blinkCaret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 10ch; }
+    }
+
+    @keyframes blinkCaret {
+      0%, 100% { border-color: #007bff; }
+      50% { border-color: transparent; }
+    }
+
+    .hero-left p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #cccccc;
+      max-width: 500px;
+    }
+
+    .light .hero-left p {
+      color: #4a4a4a;
+    }
+
+    .enter-btn {
+      padding: 0.9rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      background: linear-gradient(45deg, #007bff, #00b7eb);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #ffffff;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      width: fit-content;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .computer-graphic {
+      width: 100%;
+      max-width: 600px;
+      height: 70%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .computer-frame {
+      width: 100%;
+      height: 80%;
+      background: #2a2a2a;
+      border: 10px solid #4a4a4a;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 6px 16 PX rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .light .computer-frame {
+      background: #ffffff;
+      border-color: #343a40;
+    }
+
+    .computer-screen {
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .light .computer-screen {
+      background: rgba(0, 0, 0, 0.95);
+    }
+
+    .screen-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+      animation: scrollScreen 12s linear infinite;
+    }
+
+    @keyframes scrollScreen {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    .code-snippet {
+      position: absolute;
+      color: #28a745;
+      font-size: 0.9rem;
+      opacity: 0;
+      animation: codeFlow 5s infinite ease-in-out;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .code-snippet::before {
+      content: attr(data-line);
+      color: #6c757d;
+      width: 2rem;
+      text-align: right;
+    }
+
+    .code-snippet:nth-child(1) { left: 10%; top: 15%; animation-delay: 0s; }
+    .code-snippet:nth-child(2) { left: 25%; top: 35%; animation-delay: 1s; }
+    .code-snippet:nth-child(3) { left: 40%; top: 55%; animation-delay: 2s; }
+    .code-snippet:nth-child(4) { left: 55%; top: 75%; animation-delay: 3s; }
+
+    @keyframes codeFlow {
+      0% { opacity: 0; transform: translateY(20px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-20px); }
+    }
+
+    .typing-snippet {
+      position: absolute;
+      left: 15%;
+      top: 25%;
+      color: #28a745;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #007bff;
+      animation: typingCode 4s steps(30, end) infinite, blinkCaret 0.75s step-end infinite;
+    }
+
+    @keyframes typingCode {
+      0% { width: 0; }
+      50% { width: 15ch; }
+      100% { width: 0; }
+    }
+
+    .collab-cursor {
+      position: absolute;
+      width: 8px;
+      height: 1rem;
+      background: linear-gradient(45deg, #007bff, #00b7eb);
+      animation: blink 1s infinite, cursorMove 3s ease-in-out infinite;
+      box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+    }
+
+    .collab-cursor:nth-child(1) { left: 20%; top: 20%; animation-delay: 0s; }
+    .collab-cursor:nth-child(2) { left: 35%; top: 40%; animation-delay: 0.8s; }
+    .collab-cursor:nth-child(3) { left: 50%; top: 60%; animation-delay: 1.6s; }
+
+    @keyframes cursorMove {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .collab-icon {
+      position: absolute;
+      font-size: 1.2rem;
+      color: #6f42c1;
+      opacity: 0;
+      animation: iconGlow 5s infinite ease-in-out;
+      filter: drop-shadow(0 0 4px rgba(111, 66, 193, 0.5));
+    }
+
+    .collab-icon:nth-child(1) { left: 15%; top: 30%; animation-delay: 0s; }
+    .collab-icon:nth-child(2) { left: 30%; top: 50%; animation-delay: 1.2s; }
+    .collab-icon:nth-child(3) { left: 45%; top: 70%; animation-delay: 2.4s; }
+
+    @keyframes iconGlow {
+      0% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+      20% { opacity: 1; transform: scale(1) rotate(5deg); }
+      80% { opacity: 1; transform: scale(1) rotate(-5deg); }
+      100% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+    }
+
+    .keyword {
+      color: #007bff;
+    }
+
+    .string {
+      color: #e83e8c;
+    }
+
+    .keyboard {
+      width: 60%;
+      height: 15%;
+      background: #4a4a4a;
+      border-radius: 8px;
+      position: absolute;
+      bottom: -20%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .light .keyboard {
+      background: #343a40;
+    }
+
+    .key {
+      width: 10%;
+      height: 50%;
+      background: #495057;
+      border-radius: 4px;
+      animation: keyPress 3s infinite ease-in-out;
+    }
+
+    .key:nth-child(1) { animation-delay: 0s; }
+    .key:nth-child(2) { animation-delay: 0.5s; }
+    .key:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes keyPress {
+      0%, 100% { transform: translateY(0); }
+      10% { transform: translateY(2px); }
+    }
+
+    .desk-shadow {
+      width: 120%;
+      height: 10%;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 0%, transparent 70%);
+      position: absolute;
+      bottom: -25%;
+      z-index: 0;
+    }
+
+    .avatars {
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #007bff, #00b7eb);
+      transition: transform 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .avatar:hover {
+      transform: scale(1.1);
+    }
+
+    .features {
+      padding: 6rem 2rem 3rem;
+      text-align: center;
+      width: 100%;
+      background: #2a2a2a;
+      opacity: 0;
+      transform: translateY(100px);
+      animation: slideUp 0.8s ease-out 0.2s forwards;
+    }
+
+    .light .features {
+      background: #f8f9fa;
+    }
+
+    .features-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    .feature-card {
+      background: #3a3a3a;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: left;
+    }
+
+    .light .feature-card {
+      background: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+    }
+
+    .light .feature-card h3 {
+      color: #1a1a1a;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #cccccc;
+      line-height: 1.5;
+    }
+
+    .light .feature-card p {
+      color: #6c757d;
+    }
+
+    .about {
+      padding: 6rem 2rem 3rem;
+      text-align: center;
+      width: 100%;
+      background: #2a2a2a;
+      opacity: 0;
+      transform: translateY(100px);
+      animation: slideUp 0.8s ease-out 0.4s forwards;
+    }
+
+    .light .about {
+      background: #f8f9fa;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .light .section-title {
+      color: #1a1a1a;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .team {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-member {
+      width: 260px;
+      text-align: center;
+      padding: 1rem;
+      background: #3a3a3a;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .light .team-member {
+      background: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .team-member-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 1rem;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .team-member-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-member h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .light .team-member h3 {
+      color: #1a1a1a;
+    }
+
+    .team-member p {
+      color: #cccccc;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .light .team-member p {
+      color: #6c757d;
+    }
+
+    .team-member-social {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .team-social-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #4a4a4a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .light .team-social-icon {
+      background: #f0f0f0;
+    }
+
+    .team-social-icon img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .team-social-icon:hover {
+      background: #007bff;
+      transform: translateY(-3px);
+    }
+
+    .contact {
+      padding: 3rem 2rem;
+      text-align: center;
+      width: 100%;
+      background: #1a1a1a;
+      opacity: 0;
+      transform: translateY(100px);
+      animation: slideUp 0.8s ease-out 0.6s forwards;
+    }
+
+    .light .contact {
+      background: #ffffff;
+    }
+
+    .contact-form {
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .light label {
+      color: #1a1a1a;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #4a4a4a;
+      border-radius: 5px;
+      background: #3a3a3a;
+      color: #ffffff;
+      font-family: inherit;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .light input, .light textarea {
+      background: #ffffff;
+      color: #1a1a1a;
+      border-color: #ced4da;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+      outline: none;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      background: linear-gradient(45deg, #007bff, #00b7eb);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #ffffff;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    footer {
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #cccccc;
+      width: 100%;
+      background: #2a2a2a;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(100px);
+      animation: slideUp 0.8s ease-out 0.8s forwards;
+    }
+
+    .light footer {
+      background: #f8f9fa;
+      color: #6c757d;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #28a745;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 1000;
+      font-size: 0.9rem;
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .notification.error {
+      background: #dc3545;
+    }
+
+    .notification.copied {
+      background: #ffc107;
+      color: #1a1a1a;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 1024px) {
+      .hero-content {
+        flex-direction: column;
+        height: auto;
+        padding: 2rem;
+      }
+
+      .hero-left, .hero-right {
+        width: 100%;
+        padding: 1rem;
+      }
+
+      .hero-left {
+        text-align: center;
+        align-items: center;
+      }
+
+      .app-name {
+        font-size: 2.5rem;
+      }
+
+      .computer-graphic {
+        max-width: 400px;
+        height: 50%;
+      }
+
+      .features-content {
+        grid-template-columns: 1fr;
+      }
+
+      .team {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .team-member {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 0.5rem 1rem;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .theme-toggle {
+        margin-bottom: 0.5rem;
+      }
+
+      .avatars {
+        top: 120px;
+        right: 10px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .contact-form {
+        padding: 0 1rem;
+      }
+
+      .notification {
+        top: 10px;
+        right: 10px;
+        font-size: 0.8rem;
+        max-width: 80%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app-name {
+        font-size: 2rem;
+      }
+
+      .hero-left p {
+        font-size: 1rem;
+      }
+
+      .enter-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .computer-graphic {
+        max-width: 300px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .feature-card p {
+        font-size: 0.85rem;
+      }
+
+      .team-member-img {
+        width: 120px;
+        height: 120px;
+      }
+
+      .team-member h3 {
+        font-size: 1.1rem;
+      }
+
+      .submit-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body class="dark">
+  <header>
+    <div class="header-content">
+      <div class="theme-toggle">
+        <input type="checkbox" id="theme-toggle" checked>
+        <label for="theme-toggle">
+          <span class="icon sun">☀</span>
+          <span class="icon moon">🌙</span>
+        </label>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="avatars">
+    <div class="avatar"></div>
+    <div class="avatar"></div>
+    <div class="avatar"></div>
+  </div>
+
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <div class="hero-left">
+        <h1 class="app-name">Code Space</h1>
+        <p>Empower your coding journey with our real-time collaboration platform. Build, share, and innovate together.</p>
+        <a href="{% url 'login' %}" class="enter-btn">Enter into world of 0's and 1's</a>
+      </div>
+      <div class="hero-right">
+        <div class="computer-graphic">
+          <div class="computer-frame">
+            <div class="computer-screen">
+              <div class="screen-bg"></div>
+              <div class="code-snippet" data-line="1"><span class="keyword">function</span> codeTogether() {</div>
+              <div class="code-snippet" data-line="2"><span class="keyword">const</span> team = <span class="string">'Code Space'</span>;</div>
+              <div class="code-snippet" data-line="3"><span class="keyword">return</span> <span class="string">'Innovate!'</span>;</div>
+              <div class="code-snippet" data-line="4">}</div>
+              <div class="typing-snippet">let code = 'Collaborate';</div>
+              <div class="collab-cursor"></div>
+              <div class="collab-cursor"></div>
+              <div class="collab-cursor"></div>
+              <div class="collab-icon">💬</div>
+              <div class="collab-icon">👤</div>
+              <div class="collab-icon">{}</div>
+            </div>
+          </div>
+          <div class="keyboard">
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+          </div>
+          <div class="desk-shadow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <h2 class="section-title">Our Features</h2>
+    <div class="features-content">
+      <div class="feature-card">
+        <h3>Real-Time Collaboration</h3>
+        <p>Hosts can create coding sessions and share them via invite links. Participants join with their own code editors and view the host’s editor live, perfect for teaching and collaborative problem-solving.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Multiple Language Support</h3>
+        <p>Code in Python, C, C++, or Java with flexible language options. All code execution happens on the server, delivering real-time results with smooth responsiveness.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Built-In Chat</h3>
+        <p>Enhance collaboration with a real-time chat box, allowing hosts and participants to communicate instantly, ask questions, and share feedback during sessions.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Modern Technology</h3>
+        <p>Built with Django, WebSockets, and CodeMirror, our platform ensures a secure and seamless experience for coding classes, workshops, or technical interviews.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2 class="section-title">About Us</h2>
+    <div class="team">
+      <div class="team-member">
+        <div class="team-member-img">
+          <img src="https://monumental-buttercream-64daa9.netlify.app/1000080514.jpg" alt="Karthik K">
+        </div>
+        <h3>Karthik K</h3>
+        <p>Web Developer</p>
+        <p>Expert in creating seamless and user-friendly web applications.</p>
+        <div class="team-member-social">
+          <a href="https://www.linkedin.com/in/karthik-k-5443a0254/" target="_blank" class="team-social-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+          </a>
+          <a href="https://instagram.com" target="_blank" class="team-social-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+          </a>
+          <a href="https://wa.me/9849499433" target="_blank" class="team-social-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+          </a>  
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="team-member-img">
+          <img src="https://monumental-buttercream-64daa9.netlify.app/thofiq.jpeg" alt="Team Member 1">
+        </div>
+        <h3>THOUFIQ PS</h3>
+        <p>Web Developer</p>
+        <p>Passionate about creating innovative solutions and exploring technologies.</p>
+        <div class="team-member-social">
+          <a href="https://in.linkedin.com/in/shaik-thoufiq-808018254" target="_blank" class="team-social-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+          </a>
+          <a href="https://github.com/Thoufiq26" target="_blank" class="team-social-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub">
+          </a>
+          <a href="https://wa.me/9440733910" target="_blank" class="team-social-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <form class="contact-form" id="contactForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Code Space. All Rights Reserved.</p>
+  </footer>
+
+  <div class="notification" id="notification">Message sent successfully!</div>
+
+  <script>
+    // Ensure DOM is fully loaded before attaching listeners
+    window.addEventListener('DOMContentLoaded', () => {
+      // Theme toggle functionality
+      const toggle = document.getElementById('theme-toggle');
+      toggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark');
+        document.body.classList.toggle('light');
+      });
+
+      // Smooth scrolling functionality with header offset
+      function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+          const offset = 80;
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition - offset,
+            behavior: 'smooth'
+          });
+        } else {
+          console.error(`Section with ID ${id} not found`);
+        }
+      }
+
+      // Attach click event listeners to nav links
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const sectionId = link.getAttribute('href').substring(1);
+          scrollToSection(sectionId);
+        });
+      });
+
+      // Email sending functionality with notification and clipboard fallback
+      const contactForm = document.getElementById('contactForm');
+      const notification = document.getElementById('notification');
+
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Get form data
+        const formData = new FormData(contactForm);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
+
+        // Email validation
+        if (!validateEmail(email)) {
+          showNotification('Please enter a valid email address', 'error');
+          return;
+        }
+
+        // Construct email content
+        const emailBody = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+        const mailtoLink = `mailto:your-email@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+        try {
+          // Attempt to open the mailto link
+          const mailWindow = window.open(mailtoLink, '_blank');
+          
+          // Check if the mailto link opened successfully
+          setTimeout(() => {
+            if (!mailWindow || mailWindow.closed) {
+              // Fallback: Copy to clipboard
+              copyToClipboard(emailBody);
+              showNotification(
+                'Could not open email client. Message copied to clipboard. Please email it to your-email@example.com',
+                'copied'
+              );
+            } else {
+              showNotification('Email client opened successfully!');
+            }
+          }, 1000);
+
+          // Reset the form
+          contactForm.reset();
+        } catch (error) {
+          // Fallback for any errors
+          copyToClipboard(emailBody);
+          showNotification(
+            'Error opening email client. Message copied to clipboard. Please email it to your-email@example.com',
+            'copied'
+          );
+        }
+      });
+
+      function validateEmail(email) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+      }
+
+      function copyToClipboard(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          console.error('Failed to copy to clipboard:', err);
+        }
+        document.body.removeChild(textarea);
+      }
+
+      function showNotification(message, type = 'success') {
+        notification.textContent = message;
+        notification.classList.remove('show', 'copied', 'error');
+        notification.classList.add('show');
+        if (type === 'copied') {
+          notification.classList.add('copied');
+        } else if (type === 'error') {
+          notification.classList.add('error');
+        }
+
+        setTimeout(() => {
+          notification.classList.remove('show', 'copied', 'error');
+        }, 4000);
+      }
+
+      // Handle Enter button click with notification and navigation
+      document.querySelector('.enter-btn').addEventListener('click', function (e) {
+        // Show notification briefly
+        showNotification('Welcome to Code Space!');
+        // Get the href attribute
+        const targetUrl = this.getAttribute('href');
+        // Navigate after a short delay to allow notification to be seen
+        setTimeout(() => {
+          try {
+            window.location.href = targetUrl;
+          } catch (err) {
+            console.error(`Failed to navigate to ${targetUrl}:`, err);
+            showNotification(`Error navigating to ${targetUrl}. Please check if the page exists.`, 'error');
+          }
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>
